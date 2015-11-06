@@ -2,3 +2,34 @@
   background-color: #efefef;
   border: 1px solid #dedede;
 }
+
+#view {
+  text-align: center;
+}
+
+.box {
+  color: black;
+  font-weight: bold;
+  font-size: 32pt;
+  width: 2em;
+  padding: 24px;
+}
+
+#guesses {
+  width: 100%;
+  background-color: #ccf;
+  padding: 1em;
+}
+
+#game-over {
+  position: absolute;
+  top: 1em;
+  right: 35%;
+  font-size: 4em;
+}
+
+#you-win {
+  position: absolute;
+  top: 2em;
+  right: 50%;
+}

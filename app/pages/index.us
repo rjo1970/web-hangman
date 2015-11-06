@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= pkg.name %></title>
+    <title>Hangman</title>
 
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
   </head>
   <body>
+    <div id="content"></div>
     <script type="text/javascript" src="<%= js %>"></script>
   </body>
 </html>
