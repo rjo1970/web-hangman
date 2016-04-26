@@ -4,18 +4,29 @@ class Game
 
   maxTries: 6
 
+  isInWord: (letter) ->
+    @word.indexOf(letter) > -1
+
+  isWon: ->
+    self = this
+    foundLetters = _.chain(@word.split(""))
+    .map((letter) -> self.guessSet[letter])
+    .value()
+    _.every(foundLetters, _.identity) and @wrongGuessCount() < @maxTries
+
+  isOver: ->
+    @isWon() or @wrongGuessCount() == @maxTries
+
   view: ->
     self = this
     _.chain(@word.split(""))
     .map((letter)-> [letter, self.guessSet[letter]])
-    .map((pair)-> if pair[1] then pair[0] else "_")
+    .map((pair)-> if pair[1] or self.isOver() then pair[0] else "_")
     .value()
 
-  isInWord: (letter) ->
-    @word.indexOf(letter) > -1
-
   guess: (letter) ->
-    @guessSet[letter] = @isInWord(letter)
+   if !@isOver()
+     @guessSet[letter] = @isInWord(letter)
 
   guesses: ->
     Object.keys(@guessSet)
@@ -26,19 +37,17 @@ class Game
     .value().length
     Math.min(count, @maxTries)
 
-  isWon: ->
-    @view().indexOf("_") == -1 and @wrongGuessCount() < @maxTries
-
-  isOver: ->
-    @isWon() or @wrongGuessCount() == @maxTries
-
 window.Game = Game
 
 #####################################
 # Wireup
 #####################################
+window.wordlist = ["snow", "tomorrow", "rainbow", "teeny", "seeing",
+  "proofread", "bookshelf", "brighten", "nighttime", "skies", "cried",
+  "fairies", "shield", "chief", "rice", "officer", "space", "hedge",
+  "grudge", "distance"]
 
-window.words = _.shuffle(["rooftop", "food", "toolbox", "boom", "gloomy", "spoonful", "soon", "scoop", "hoot", "poor", "wood", "soot", "football", "droop", "scooter", "proofread", "bookshelf", "gooey", "loop", "noodle"])
+window.words = _.shuffle(window.wordlist)
 
 window.game = new Game(window.words[0])
 

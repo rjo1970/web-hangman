@@ -42,3 +42,7 @@ describe "A game starts with a word", ->
       Then -> expect(@game.view()).toEqual ["w","o","r","d"]
       And -> expect(@game.isWon()).toBe(true)
       And -> expect(@game.isOver()).toBe true
+
+      describe "hitting a wrong key after winning does not count", ->
+        When -> @game.guess("y")
+        Then -> expect(@game.wrongGuessCount()).toEqual 1
